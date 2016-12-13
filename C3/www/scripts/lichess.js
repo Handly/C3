@@ -37,3 +37,27 @@ function lichessLogout() {
     };
     xhttp.send();
 }
+
+// Get Lichess account info including current games
+// returns true if logged in, false if "unauthorized"
+function getLichessUser() {
+    var xhttp = new XMLHttpRequest();
+    var url = "http://en.lichess.org/account/info/";
+    var bustCache = '?' + new Date().getTime();
+    xhttp.open("GET", url + bustCache, true);
+
+    // send the proper header information along with the request
+    xhttp.setRequestHeader("Accept", "application/vnd.lichess.v1+json");
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // status OK --> return true
+            return true;
+        }
+        else if (this.readyState == 4 && this.status != 200) {
+            // unauthorized --> return false
+            return false;
+        }
+    };
+    xhttp.send();
+
+}

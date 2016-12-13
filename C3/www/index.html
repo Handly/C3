@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'self' data: gap: https://ssl.gstatic.com http://en.lichess.org 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <title>C3</title>
+
+    <script src="scripts/jquery-2.1.1.min.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+    <script src="scripts/chessboard-0.3.0.js"></script>
+
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/chessboard-0.3.0.css">
+
+    <style>
+        .ui-page-theme-a {
+            background: #ffffff;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div data-role="page" id="chessboard" data-theme="a">
+        <div data-role="panel" id="loginPanel">
+            <form>
+                <input type="text" id="username" name="username" placeholder="Username" value="lanyon" required>
+                <input type="password" id="password" name="password" placeholder="Password" value="|LANy0n|" required>
+                <button id="login-btn" data-role="button">Login</button>
+            </form>
+        </div>
+
+        <div role="main">
+            <a href="#loginPanel" id="login-link" class="ui-btn ui-btn-inline">Login</a>
+            <button id="logout-btn" class="hidden ui-btn-inline" data-role="button">Logout</button>
+
+            <!-- start example HTML -->
+            <div id="board" style="width: 100%"></div>
+            <!-- end example HTML -->
+        </div>
+    </div>
+    <script>
+        var init = function () {
+
+            //--- start example JS ---
+            var onDrop = function (source, target) {
+                if (source != target && target != "offboard")
+                    console.log(source + target);
+            };
+
+            var cfg = {
+                draggable: true,
+                position: 'start',
+                onDrop: onDrop
+            };
+            var board = ChessBoard('board', cfg);
+
+            //--- end example JS ---
+
+        }; // end init()
+        $(document).ready(init);
+    </script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/lichess.js"></script>
+</body>
+</html>

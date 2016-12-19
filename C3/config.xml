@@ -107,5 +107,4 @@
     <splash src="res/screens/wp8/SplashScreenImage.png" width="768" height="1280" />
   </platform>
   <plugin name="cordova-plugin-bluetooth-serial" version="0.4.5" src="F:\C\C\plugins\cordova-plugin-bluetooth-serial" />
-  <plugin name="cordova-plugin-crosswalk-webview" version="1.6.1" src="F:\C\C\plugins\cordova-plugin-crosswalk-webview" />
 </widget>

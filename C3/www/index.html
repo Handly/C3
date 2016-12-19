@@ -5,7 +5,7 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'self' data: gap: https://ssl.gstatic.com http://en.lichess.org 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'self' data: gap: https://ssl.gstatic.com http://en.lichess.org 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *">
 
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
@@ -23,6 +23,7 @@
         .ui-page-theme-a {
             background: #ffffff;
         }
+
         .hidden {
             display: none;
         }
@@ -30,12 +31,56 @@
 
 </head>
 <body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Machine</h1>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <form>
+                <select name="variant" id="variant">
+                    <option value="1">Standard</option>
+                    <option value="2">Chess960</option>
+                    <option value="5">Three-check</option>
+                </select>
+
+                <select name="engine" id="engine">
+                    <option value="lichess">Stockfish (lichess)</option>
+                    <option value="stockfish" disabled>Stockfish (local)</option>
+                </select>
+
+                <select name="level" id="level">
+                    <option value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5</option>
+                    <option value="6">Level 6</option>
+                    <option value="7">Level 7</option>
+                    <option value="8">Level 8</option>
+                </select>
+
+                <select name="color" id="color">
+                    <option value="white">White</option>
+                    <option value="black">Black</option>
+                    <option value="random">Random</option>
+                </select>
+
+                <select name="timeMode" id="timeMode">
+                    <option value="0">Unlimited</option>
+                    <option value="1" disabled>Real time</option>
+                </select>
+
+                <a href="#chessboard" class="ui-btn" id="createGame-btn">Create Game</a>
+            </form>
+        </div>
+    </div>
     <div data-role="page" id="chessboard" data-theme="a">
         <div data-role="panel" id="loginPanel">
             <form>
                 <input type="text" id="username" name="username" placeholder="Username" value="lanyon" required>
                 <input type="password" id="password" name="password" placeholder="Password" value="|LANy0n|" required>
-                <button id="login-btn" data-role="button">Login</button>
+                <button id="login-btn">Login</button>
             </form>
         </div>
 
@@ -45,7 +90,7 @@
             <button id="getUser-btn" class="ui-btn-inline" data-role="button">getUser</button>
 
             <!-- start example HTML -->
-            <div id="board" style="width: 100%"></div>
+            <div id="board" style="width: 360px"></div>
             <!-- end example HTML -->
         </div>
     </div>
@@ -54,17 +99,20 @@
 
             //--- start example JS ---
             var onDrop = function (source, target) {
-                if (source != target && target != "offboard")
+                if (source != target && target != "offboard") {
                     console.log(source + target);
+                    sendMove(source, target);
+                }
+
             };
 
             var cfg = {
                 draggable: true,
                 position: 'start',
-                onDrop: onDrop
+                onDrop: onDrop,
+                squarePieces: false
             };
-            var board = ChessBoard('board', cfg);
-
+            window.board = ChessBoard('board', cfg);
             //--- end example JS ---
 
         }; // end init()
